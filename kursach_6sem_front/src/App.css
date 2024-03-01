@@ -1,0 +1,59 @@
+/*.App {*/
+/*    text-align: center;*/
+/*}*/
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    z-index: 0;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+body {
+    font-family: 'Roboto', 'sans-serif';
+    min-height: 100vh;
+}
+
+#root {
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+
+.container-md {
+    padding: 20px !important;
+}
+
+.container-xxl {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.btn-primary {
+    background: #00b000 !important;
+    border-color: #00b000 !important;
+}
+
+.btn-primary:hover {
+    background: #009600 !important;
+}
+
+.badge {
+    background-color: #00b000 !important;
+}
+
+.bg-success {
+    background-color: #00b000 !important;
+}
+
+
+
+

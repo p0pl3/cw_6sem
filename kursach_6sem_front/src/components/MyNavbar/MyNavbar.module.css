@@ -1,0 +1,25 @@
+.navbar {
+    width: fit-content;
+    color: white;
+}
+
+.inner{
+    background: #00a200;
+}
+
+.inner a {
+    padding: 8px;
+}
+
+.inner a:hover {
+    background: #009600;
+}
+
+.inner p {
+    margin-bottom: 0;
+    color: white;
+}
+
+.inner img {
+    width: 32px;
+}
