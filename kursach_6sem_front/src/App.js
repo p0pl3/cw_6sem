@@ -10,6 +10,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RootPage from "./pages/RootPage";
 import ErrorPage from "./pages/ErrorPage";
 import PageNotFound from "./pages/PageNotFound";
+import AuthRootPage from "./pages/Auth/AuthRootPage";
+import LoginPage from "./pages/Auth/LoginPage";
+import RegisterPage from "./pages/Auth/RegisterPage";
+import AdminPages from "./pages/AdminPages";
+import AdminPage from "./pages/AdminPage";
+import UsersPage from "./pages/User/UsersPage";
+import UserPage from "./pages/User/UserPage";
+import StoresPage from "./pages/Store/StoresPage";
+import StorePage from "./pages/Store/StorePage";
+import StoresCreatePage from "./pages/Store/StoresCreatePage";
 
 
 function App() {
@@ -26,6 +36,85 @@ function App() {
                         element={<MainPage/>}
                     />
                 </Route>
+
+                <Route
+                    path="/admin"
+                    element={<AdminPages/>}
+                >
+                    <Route
+                        path=""
+                        element={<AdminPage/>}
+                    />
+                    <Route
+                        path="users"
+                    >
+                        <Route
+                            path=""
+                            element={<UsersPage/>}
+                        />
+
+                        <Route
+                            path=":id"
+                            element={<UserPage/>}
+                        />
+                    </Route>
+                    <Route path="stores">
+                        <Route
+                            path=""
+                            element={<StoresPage/>}
+                        />
+                        <Route
+                            path=":id"
+                            element={<StorePage/>}
+                        />
+                        <Route
+                            path="create"
+                            element={<StoresCreatePage/>}
+                        />
+                    </Route>
+                    <Route path="categories">
+                        <Route
+                            path=""
+                            element={<CategoriesPage/>}
+                        />
+                        <Route
+                            path=":id"
+                            element={<CategoryPage/>}
+                        />
+                        <Route
+                            path="create"
+                            element={<CategoryCreatePage/>}
+                        />
+                    </Route>
+                    <Route path="roles">
+                        <Route
+                            path=""
+                            element={<RolesPage/>}
+                        />
+                        <Route
+                            path=":id"
+                            element={<RolePage/>}
+                        />
+                        <Route
+                            path="create"
+                            element={<RoleCreatePage/>}
+                        />
+                    </Route>
+                </Route>
+
+                <Route
+                    element={<AuthRootPage/>}
+                >
+                    <Route
+                        path="login"
+                        element={<LoginPage/>}
+                    />
+                    <Route
+                        path="registration"
+                        element={<RegisterPage/>}
+                    />
+                </Route>
+
                 <Route
                     path="*"
                     element={<PageNotFound/>}
