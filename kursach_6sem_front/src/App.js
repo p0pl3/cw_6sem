@@ -20,9 +20,30 @@ import UserPage from "./pages/User/UserPage";
 import StoresPage from "./pages/Store/StoresPage";
 import StorePage from "./pages/Store/StorePage";
 import StoresCreatePage from "./pages/Store/StoresCreatePage";
+import {useDispatch, useSelector} from "react-redux";
+import {getCurUser, initCurStore} from "./redux/slices/auth";
+import {useEffect} from "react";
+import CategoriesPage from "./pages/Category/CategoriesPage";
+import CategoryPage from "./pages/Category/CategoryPage";
+import CategoryCreatePage from "./pages/Category/CategoryCreatePage";
+import RolesPage from "./pages/Role/RolesPage";
+import RolePage from "./pages/Role/RolePage";
+import RoleCreatePage from "./pages/Role/RoleCreatePage";
 
 
 function App() {
+    const dispatch = useDispatch()
+    const token = useSelector(selectToken)
+
+    useEffect(() => {
+        dispatch(initCurStore())
+    }, [dispatch])
+
+    useEffect(() => {
+        if (token)
+            dispatch(getCurUser(token))
+    }, [dispatch, token])
+
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route>
