@@ -7,7 +7,7 @@ import MyHeader from "../../components/MyHeader";
 import {Button, Container, Modal} from "react-bootstrap";
 import {OrderComponent} from "../../components/OrderComponent";
 import QRCode from "react-qr-code";
-import {server_url} from "../../utils/consts";
+import {ip} from "../../utils/consts";
 
 export default function OrderPage() {
     const navigate = useNavigate()
@@ -109,7 +109,7 @@ export default function OrderPage() {
     const handleShow = (index) => {
         setShow(true);
     }
-    console.log(`${server_url}/${window.location.pathname.slice(1,7)}/${id}`)
+
     return (
         <>
             <MyHeader>
@@ -126,7 +126,7 @@ export default function OrderPage() {
                     <Modal.Title>QR код заказа</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex justify-content-center">
-                    <QRCode value={`${server_url}/${window.location.pathname.slice(1,7)}/${id}`}/>
+                    <QRCode value={`${ip}/${window.location.pathname.slice(1,7)}/${id}`}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button

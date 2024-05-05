@@ -1,12 +1,12 @@
 import axios from "axios";
-import {ip} from "../consts";
+import {server_url} from "../consts";
 
 export const injectStore = _store => {
     store = _store
 }
 
 export const axiosInstance = axios.create({
-    baseURL: ip
+    baseURL: server_url
 });
 
 let store
