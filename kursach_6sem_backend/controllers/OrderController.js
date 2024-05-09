@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const path = require('path');
-const {Order, Category, Role, Store, OrderArticle, Article} = require('../models/models')
+const {Order, Category, Role, Store, BookOrder, Book} = require('../models/models')
 const {Op} = require('sequelize');
 const ApiError = require('../error/ApiError');
 
@@ -18,7 +18,7 @@ class OrderController {
             });
             return res.json(order);
         } catch (e) {
-            next(ApiError.badRequest(e.message));
+            next(ApiError.badRequest("Некоректный ввод"));
         }
     }
 
@@ -42,11 +42,11 @@ class OrderController {
             }
             return res.json(order);
         } catch (e) {
-            next(ApiError.badRequest(e.message));
+            next(ApiError.badRequest("Некоректный ввод"));
         }
     }
 
-    async performInternalOrder(req, res) {
+    async performInternalOrder(req, res, next) {
         const {id, store_id} = req.params
         try {
             const order = Order.update(
@@ -60,13 +60,13 @@ class OrderController {
                     }
                 }
             );
-            res.json(order);
+            return res.json(order);
         } catch (e) {
-            res.status(400).json({message: "Ошибка валидации"});
+            next(ApiError.badRequest("Некоректный ввод"));
         }
     }
 
-    async performExternalOrder(req, res) {
+    async performExternalOrder(req, res, next) {
         const {id} = req.params;
 
         try {
@@ -83,9 +83,9 @@ class OrderController {
                         }
                     }
                 )
-            res.json(order);
+            return res.json(order);
         } catch (e) {
-            res.status(400).json({message: "Ошибка валидации"});
+            next(ApiError.badRequest("Некоректный ввод"));
         }
     }
 
@@ -253,7 +253,7 @@ class OrderController {
             {
                 where: {id},
                 include: [
-                    {model: OrderArticle},
+                    {model: BookOrder},
                 ]
             },
         )
@@ -271,7 +271,7 @@ class OrderController {
                     }
                 },
                 include: [
-                    {model: OrderArticle},
+                    {model: BookOrder},
                     {model: Store, as: 'destinationWarehouse'},
                     {model: Store, as: 'sourceWarehouse'},
                 ]
@@ -286,7 +286,7 @@ class OrderController {
         for (let count = 0; count < order.order_articles.length; count++) {
             const articles = order.order_articles[count]
             if (order.destinationId) {
-                const articleDist = await Article.findOne(
+                const articleDist = await Book.findOne(
                     {
                         where: {
                             article_number: articles.article_number,
@@ -298,7 +298,7 @@ class OrderController {
                     articleDist.count += articles.count
                     await articleDist.save()
                 } else {
-                    await Article.create({
+                    await Book.create({
                         name: articles.name,
                         author: articles.author,
                         article_number: articles.article_number,
@@ -310,7 +310,7 @@ class OrderController {
             }
 
             if (order.sourceId) {
-                const articleSource = await Article.findOne(
+                const articleSource = await Book.findOne(
                     {
                         where: {
                             article_number: articles.article_number,

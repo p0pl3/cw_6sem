@@ -10,18 +10,14 @@ export default function CategoryCreatePage() {
     const [category, setCategory] = useState({
         name: ""
     });
-
-
-
     const [error, setError] = useState("")
-
     const handleChange = ({target: {value, name}}) => {
         setCategory({...category, [name]: value})
     }
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(category).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await createCategory(category)
             setError("Успешно")

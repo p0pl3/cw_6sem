@@ -2,7 +2,7 @@ import {axiosInstance} from "./requests";
 
 export async function getCategories() {
     try {
-        return axiosInstance.get("/category").then(res=>res.data)
+        return axiosInstance.get("/category").then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -10,7 +10,7 @@ export async function getCategories() {
 
 export async function getCategory(id) {
     try {
-        return axiosInstance.get(`/category/${id}`).then(res=>res.data)
+        return axiosInstance.get(`/category/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -18,7 +18,7 @@ export async function getCategory(id) {
 
 export async function createCategory(data) {
     try {
-        return await axiosInstance.post(`/category`, data)
+        return await axiosInstance.post(`/category`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -26,7 +26,7 @@ export async function createCategory(data) {
 
 export async function updateCategory(id, data) {
     try {
-        return await axiosInstance.put(`/category/${id}`, data)
+        return await axiosInstance.put(`/category/${id}`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -34,7 +34,7 @@ export async function updateCategory(id, data) {
 
 export async function deleteCategory(id) {
     try {
-        return axiosInstance.delete(`/category/${id}`)
+        return axiosInstance.delete(`/category/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }

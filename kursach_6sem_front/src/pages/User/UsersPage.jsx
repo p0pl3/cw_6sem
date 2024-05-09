@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getUsers} from "../../utils/requests/user";
 import ItemsList from "../../components/ItemsList";
-import MyHeader from "../../components/MyHeader";
 
 export default function UsersPage() {
 
@@ -13,7 +12,7 @@ export default function UsersPage() {
                 id: item.id,
                 email: item.email,
                 phone: item.phone,
-                role: item.role ? item.role.name: ""
+                role: item.role ? item.role.name : ""
             }))
             setUsers(new_res)
         })

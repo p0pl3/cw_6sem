@@ -26,10 +26,10 @@ function RootPage() {
     }
 
     return (
-            <RequireSuperUser>
-                <MyNavbar/>
-                <Outlet/>
-            </RequireSuperUser>
+        <RequireSuperUser>
+            <MyNavbar/>
+            <Outlet/>
+        </RequireSuperUser>
     )
 }
 

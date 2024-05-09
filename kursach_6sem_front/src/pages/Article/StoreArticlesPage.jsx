@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import ItemsList from "../../components/ItemsList";
 import {useSelector} from "react-redux";
-import {selectUser} from "../../redux/slices/auth";
+import {selectCurStore, selectUser} from "../../redux/slices/auth";
 import MyHeader from "../../components/MyHeader";
-import {selectCurStore} from "../../redux/slices/auth";
 import {getStoreArticles} from "../../utils/requests/storeArticle";
 import {Button, Container, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -53,11 +52,11 @@ export default function StoreArticlesPage() {
     }, [curStore, query])
 
     useEffect(() => {
-            getCategories().then(res => {
-                setCategories(res)
-            }).catch(e => {
-                setError(e.response.data.message)
-            })
+        getCategories().then(res => {
+            setCategories(res)
+        }).catch(e => {
+            setError(e.response.data.message)
+        })
     }, [])
 
 

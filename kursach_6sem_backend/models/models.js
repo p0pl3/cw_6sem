@@ -1,7 +1,7 @@
 const sequelize = require('../db');
 const {DataTypes} = require('sequelize');
 
-const User = sequelize.define('account', {
+const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email: {type: DataTypes.STRING, unique: true,},
     phone: {type: DataTypes.STRING, unique: true,},
@@ -24,7 +24,7 @@ const Store = sequelize.define('store', {
 })
 
 
-const Article = sequelize.define('article', {
+const Book = sequelize.define('book', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING},
     author: {type: DataTypes.STRING},
@@ -46,7 +46,7 @@ const Order = sequelize.define('order', {
     order_type: {type: DataTypes.STRING},
 })
 
-const OrderArticle = sequelize.define('order_article', {
+const BookOrder = sequelize.define('book_order', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING,},
     author: {type: DataTypes.STRING},
@@ -71,25 +71,25 @@ Order.belongsTo(User, {as: 'sourceUser', foreignKey: 'sourceUserId'});
 Order.belongsTo(Store, {as: 'destinationWarehouse', foreignKey: 'destinationId'});
 Order.belongsTo(Store, {as: 'sourceWarehouse', foreignKey: 'sourceId'});
 
-Store.hasMany(Article);
-Article.belongsTo(Store);
+Store.hasMany(Book);
+Book.belongsTo(Store);
 
-Category.hasMany(Article);
-Article.belongsTo(Category);
+Category.hasMany(Book);
+Book.belongsTo(Category);
 
-Order.hasMany(OrderArticle);
-OrderArticle.belongsTo(Order);
+Order.hasMany(BookOrder);
+BookOrder.belongsTo(Order);
 
-Category.hasMany(OrderArticle);
-OrderArticle.belongsTo(Category);
+Category.hasMany(BookOrder);
+BookOrder.belongsTo(Category);
 
 
 module.exports = {
     User,
     Role,
     Store,
-    Article,
-    OrderArticle,
+    Book,
+    BookOrder,
     Order,
     Category,
     UserStore,

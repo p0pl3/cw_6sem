@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {selectUser} from "../../redux/slices/auth";
-import MyHeader from "../../components/MyHeader";
+import {selectCurStore, selectUser} from "../../redux/slices/auth";
 import {Button, Container, Form, Image, Modal, Table} from "react-bootstrap";
 import {createOrderExternal, createOrderInternal} from "../../utils/requests/order";
-import {selectCurStore} from "../../redux/slices/auth";
 import {createOrderArticle} from "../../utils/requests/orderArticle";
-import * as events from "events";
 
 export default function OrderCreatePage() {
     const navigate = useNavigate()
@@ -19,7 +16,6 @@ export default function OrderCreatePage() {
     const [orderType, setOrderType] = useState("external");
 
     const [books, setBooks] = useState([]);
-
 
     const curUser = useSelector(selectUser)
 
@@ -50,7 +46,8 @@ export default function OrderCreatePage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(item).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
+        if (!/\d\d\d\d-\d\d-\d\d/i.test(item.date_arrive)) { setError("Неверный формат даты. (гггг-мм-дд)"); return;}
         let order;
         try {
             if (orderType === "internal")
@@ -119,7 +116,7 @@ export default function OrderCreatePage() {
     const submitModal = (e) => {
         e.preventDefault();
         const isEmpty = Object.values(curBook.book).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         if (curBook.index === -1) {
             let tempBooks = books
             tempBooks.push(curBook.book)
@@ -163,7 +160,7 @@ export default function OrderCreatePage() {
                         <Form.Label>Дата</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Введите дату"
+                            placeholder="Введите дату (гггг-мм-дд)"
                             name="date_arrive"
                             value={item.name}
                             onChange={handleChange}
@@ -273,7 +270,7 @@ export default function OrderCreatePage() {
                         >
                             <Form.Label>Количество</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="number"
                                 placeholder="Введите количество"
                                 name="count"
                                 value={curBook.book.count}

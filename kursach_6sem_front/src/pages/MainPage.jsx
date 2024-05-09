@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Card, Container} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {selectUser} from "../redux/slices/auth";
-import {selectCurStore} from "../redux/slices/auth";
+import {selectCurStore, selectUser} from "../redux/slices/auth";
 import {getLastExternalOrders, getLastInternalOrders} from "../utils/requests/order";
 import ItemsList from "../components/ItemsList";
 

@@ -1,11 +1,11 @@
-const {Article, User} = require('../models/models')
+const {Book, User} = require('../models/models')
 const ApiError = require('../error/ApiError');
 const {Op, DataTypes} = require('sequelize');
 
-class ArticleController {
+class BookController {
     async create(req, res, next) {
         const {name, author, article_number, count, categoryId, storeId} = req.body
-        const candidate = await Article.findOne({where: {article_number}})
+        const candidate = await Book.findOne({where: {article_number}})
         if (/[!@#$%^&*(),.?":{}|<>]/g.test(name))
             return next(ApiError.badRequest('название содержит специальные символы'))
         if (/[!@#$%^&*(),.?":{}|<>]/g.test(author))
@@ -13,7 +13,7 @@ class ArticleController {
         if (candidate){
             return next(ApiError.badRequest('Товар с таким номером уже существует'))
         }
-        const article = await Article.create({name, author, article_number, count, categoryId, storeId})
+        const article = await Book.create({name, author, article_number, count, categoryId, storeId})
         return res.json(article)
     }
 
@@ -40,7 +40,7 @@ class ArticleController {
             }
         }
 
-        const articles = await Article.findAll(
+        const articles = await Book.findAll(
             {
                 where
             }
@@ -50,7 +50,7 @@ class ArticleController {
 
     async getOne(req, res) {
         const {store_id, obj_id} = req.params
-        const article = await Article.findOne(
+        const article = await Book.findOne(
             {
                 where: {
                     storeId: store_id,
@@ -66,7 +66,7 @@ class ArticleController {
         const {name, author, article_number, count, categoryId, storeId} = req.body
 
         try {
-            const article = Article.update(
+            const article = Book.update(
                 {name, author, article_number, count, categoryId, storeId},
                 {
                     where: {
@@ -84,7 +84,7 @@ class ArticleController {
     async delete(req, res) {
         const {store_id, obj_id} = req.params
         try {
-            await Article.destroy({
+            await Book.destroy({
                 where: {
                     id: obj_id,
                     storeId: store_id,
@@ -98,4 +98,4 @@ class ArticleController {
 
 }
 
-module.exports = new ArticleController()
+module.exports = new BookController()

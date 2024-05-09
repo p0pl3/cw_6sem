@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
-import MyHeader from "../components/MyHeader";
-import {Badge, Button, Container, Image, ListGroup} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Badge, Button, Container} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {logout, selectUser, setCurStore} from "../redux/slices/auth";
 import {getStoresAvailable} from "../utils/requests/store";
-import ItemsList from "../components/ItemsList";
 
 function ProfilePage() {
     const dispatch = useDispatch()
@@ -39,10 +36,13 @@ function ProfilePage() {
                 {user ?
                     <>
                         <div>
-                            <h3><Badge style={{ "background": "#00b000"}}>Email:</Badge> {user.email}</h3>
-                            <h3><Badge >Номер:</Badge> {user.phone ? user.phone : ""}</h3>
-                            <h3><Badge >Роль:</Badge> {user.role ? user.role.name : ""}</h3>
-                            <h3><Button variant="danger" onClick={() => dispatch(logout())}>Выйти</Button>
+                            <h3><Badge style={{"background": "#00b000"}}>Email:</Badge> {user.email}</h3>
+                            <h3><Badge>Номер:</Badge> {user.phone ? user.phone : ""}</h3>
+                            <h3><Badge>Роль:</Badge> {user.role ? user.role.name : ""}</h3>
+                            <h3><Button
+                                variant="danger"
+                                onClick={() => dispatch(logout())}
+                            >Выйти</Button>
                             </h3>
                         </div>
                     </>

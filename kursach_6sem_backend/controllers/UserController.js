@@ -1,18 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {
-    User,
-    Basket,
-    Type,
-    Device,
-    DeviceInfo,
-    Permission,
-    Role,
-    Store,
-    Category,
-    UserStore
-} = require('../models/models')
+const {User, Role, Store, UserStore} = require('../models/models')
 const {Op} = require("sequelize");
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -130,34 +119,14 @@ class UserController {
                     }
                 }
             });
-
-
-
-            // const userForM2M = await User.findOne(
-            //     {
-            //         where: {id},
-            //         include: [
-            //             {model: Role},
-            //             {model: Store},
-            //         ]
-            //     },
-            // )
-
-            // userForM2M.store = roles
-            // await userForM2M.save()
-            console.log(st)
-            // if (st){
-            //     await userForM2M.setStores(st);
-            // }
-
             await UserStore.destroy({
                 where: {
-                    accountId: id
+                    userId: id
                 }
             })
 
             for (const stKey in stores) {
-                const userStore = await UserStore.create({storeId: stores[stKey], accountId: id})
+                await UserStore.create({storeId: stores[stKey], userId: id})
             }
             return res.status(200).json(user);
 

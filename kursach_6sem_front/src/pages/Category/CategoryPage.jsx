@@ -10,29 +10,22 @@ export default function CategoryPage() {
         name: "",
     })
     const navigate = useNavigate()
-
     const {id} = useParams()
     const [error, setError] = useState("")
-
-
-
     useEffect(() => {
-
-            getCategory(id).then(res => {
-                const new_res = (({name}) =>
-                    ({name}))(res);
-                setCategory(new_res)
-            })
+        getCategory(id).then(res => {
+            const new_res = (({name}) =>
+                ({name}))(res);
+            setCategory(new_res)
+        })
     }, [id])
-
-
     const handleChange = ({target: {value, name}}) => {
         setCategory({...category, [name]: value})
     }
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(category).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await updateCategory(id, category)
             setError("Успешно")
@@ -40,15 +33,11 @@ export default function CategoryPage() {
             setError(e.response.data.message)
         }
     }
-
-
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-
     const handleShow = () => {
         setShow(true);
     }
-
     const submitModal = async (e) => {
         e.preventDefault();
         try {
@@ -60,7 +49,6 @@ export default function CategoryPage() {
         }
         setShow(false)
     }
-
     return (
         <>
             <MyHeader>

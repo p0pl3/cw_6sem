@@ -1,15 +1,15 @@
-const {Article, OrderArticle} = require('../models/models')
+const {Book, BookOrder} = require('../models/models')
 
-class ArticleController {
+class BookOrderController {
     async create(req, res) {
         const {name, author, article_number, count, categoryId, orderId} = req.body
-        const article = await OrderArticle.create({name, author, article_number, count, categoryId, orderId})
+        const article = await BookOrder.create({name, author, article_number, count, categoryId, orderId})
         return res.json(article)
     }
 
     async getAll(req, res) {
         const {order_id} = req.params
-        const orderArticle = await OrderArticle.findAll(
+        const orderArticle = await BookOrder.findAll(
             {
                 where: {orderId: order_id}
             }
@@ -19,7 +19,7 @@ class ArticleController {
 
     async getOne(req, res) {
         const {order_id, obj_id} = req.params
-        const orderArticle = await OrderArticle.findOne(
+        const orderArticle = await BookOrder.findOne(
             {
                 where: {
                     orderId: order_id,
@@ -35,7 +35,7 @@ class ArticleController {
         const {name, author, article_number, count, categoryId, orderId} = req.body
 
         try {
-            const orderArticle = OrderArticle.update(
+            const orderArticle = BookOrder.update(
                 {name, author, article_number, count, categoryId, orderId},
                 {
                     where: {
@@ -53,7 +53,7 @@ class ArticleController {
     async delete(req, res) {
         const {order_id, obj_id} = req.params
         try {
-            await OrderArticle.destroy({
+            await BookOrder.destroy({
                 where: {
                     id: obj_id,
                     orderId: order_id,
@@ -67,4 +67,4 @@ class ArticleController {
 
 }
 
-module.exports = new ArticleController()
+module.exports = new BookOrderController()

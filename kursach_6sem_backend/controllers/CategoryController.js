@@ -2,8 +2,13 @@ const {Category, Store} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
 class CategoryController {
-    async create(req, res) {
+    async create(req, res, next) {
         const {name} = req.body
+        const candidate = await Category.findOne({where: {name}})
+        if (/[!@#$%^&*(),.?":{}|<>]/g.test(name))
+            return next(ApiError.errorRequest('Название содержит недопустимые символы'))
+        if (candidate)
+            return next(ApiError.errorRequest('Категория уже существует'))
         const category = await Category.create({name})
         return res.json(category)
     }

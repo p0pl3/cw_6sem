@@ -12,8 +12,9 @@ function RegisterPage() {
         email: "",
         password: "",
         phone: "",
-        roleId: {}
+        roleId: 3
     });
+    const [error, setError]= useState("")
 
     const handleChange = ({target: {value, name}}) => {
         setAuthData({...authData, [name]: value})
@@ -21,13 +22,23 @@ function RegisterPage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(authData).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
+        const regex = /^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@[а-яА-Яа-яА-Яa-zA-Z0-9-]+(\.[а-яА-Яa-zA-Z0-9]+)*(\.[a-zA-Z0-9]+)$/;
+        if (!regex.test(authData.email)) { setError("Проверьте правильность email"); return;}
+        if (!/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(authData.phone)){ setError("Введите номер в формате +7(999)999-99-99"); return;}
+
+        if (isEmpty) { setError("Заполните все поля"); return;}
         dispatch(registerUser(authData));
     }
     return (
         <>
-            <MyHeader><h1>Регистрация</h1></MyHeader>
+            <MyHeader>
+                <h1>Регистрация</h1>
+
+            </MyHeader>
+
             <Container fluid="xxl">
+
                 <Form onSubmit={submitForm}>
                     <Form.Group
                         className="mb-3"
@@ -37,15 +48,18 @@ function RegisterPage() {
                         <Form.Select
                             name="roleId"
                             onChange={handleChange}
+                            value={authData.roleId}
                         >
                             <option
                                 value={3}
                                 selected={3 === authData.roleId}
-                            >Сотрудник склада</option>
+                            >Сотрудник склада
+                            </option>
                             <option
                                 value={4}
                                 selected={4 === authData.roleId}
-                            >Поставщик</option>
+                            >Поставщик
+                            </option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group
@@ -96,6 +110,7 @@ function RegisterPage() {
                 </Form>
                 <Link to={"/login"}>Авторизация</Link>
             </Container>
+            {error === "" ? "" : <Container>{error}</Container>}
         </>
     )
 }

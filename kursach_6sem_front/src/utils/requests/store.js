@@ -2,7 +2,7 @@ import {axiosInstance} from "./requests";
 
 export async function getStores() {
     try {
-        return await axiosInstance.get("/store").then(res=>res.data)
+        return await axiosInstance.get("/store").then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -10,7 +10,7 @@ export async function getStores() {
 
 export async function getStoresAvailable() {
     try {
-        return await axiosInstance.get("/store/available").then(res=>res.data)
+        return await axiosInstance.get("/store/available").then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -18,7 +18,7 @@ export async function getStoresAvailable() {
 
 export async function getStore(id) {
     try {
-        return axiosInstance.get(`/store/${id}`).then(res=>res.data)
+        return axiosInstance.get(`/store/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -26,7 +26,7 @@ export async function getStore(id) {
 
 export async function updateStore(id, data) {
     try {
-        return await axiosInstance.put(`/store/${id}`, data)
+        return await axiosInstance.put(`/store/${id}`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -34,7 +34,7 @@ export async function updateStore(id, data) {
 
 export async function createStore(data) {
     try {
-        return await axiosInstance.post(`/store`, data)
+        return await axiosInstance.post(`/store`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -42,7 +42,7 @@ export async function createStore(data) {
 
 export async function deleteStore(id) {
     try {
-        return axiosInstance.delete(`/store/${id}`)
+        return axiosInstance.delete(`/store/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }

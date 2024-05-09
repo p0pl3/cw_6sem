@@ -21,12 +21,15 @@ export default function CategoriesPage() {
     return (
         <>
             <MyHeader>
-                <Button as={Link} to={"/admin/categories/create"}>Создать жанр</Button>
+                <Button
+                    as={Link}
+                    to={"/admin/categories/create"}
+                >Создать жанр</Button>
             </MyHeader>
             <ItemsList
                 items={categories}
                 link="/admin/categories"
-                thread_names={["id","наименование"]}
+                thread_names={["id", "наименование"]}
             />
         </>
     )

@@ -1,11 +1,6 @@
 import './App.css'
 import MainPage from './pages/MainPage';
-import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
-    RouterProvider
-} from 'react-router-dom'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RootPage from "./pages/RootPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -21,7 +16,7 @@ import StoresPage from "./pages/Store/StoresPage";
 import StorePage from "./pages/Store/StorePage";
 import StoresCreatePage from "./pages/Store/StoresCreatePage";
 import {useDispatch, useSelector} from "react-redux";
-import {getCurUser, initCurStore} from "./redux/slices/auth";
+import {getCurUser, initCurStore, selectToken} from "./redux/slices/auth";
 import {useEffect} from "react";
 import CategoriesPage from "./pages/Category/CategoriesPage";
 import CategoryPage from "./pages/Category/CategoryPage";
@@ -143,7 +138,6 @@ function App() {
                             />
                         </Route>
                     </Route>
-
 
                     <Route
                         path="profile"

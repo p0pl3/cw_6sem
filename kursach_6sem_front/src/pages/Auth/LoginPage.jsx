@@ -11,6 +11,7 @@ function LoginPage() {
         email: "",
         password: ""
     });
+    const [error, setError]= useState("")
 
     const handleChange = ({target: {value, name}}) => {
         setAuthData({...authData, [name]: value})
@@ -18,15 +19,22 @@ function LoginPage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(authData).some((val) => !val);
-        if (isEmpty) return;
+        const regex = /^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@[а-яА-Яа-яА-Яa-zA-Z0-9-]+(\.[а-яА-Яa-zA-Z0-9]+)*(\.[a-zA-Z0-9]+)$/;
+        if (isEmpty) { setError("Заполните все поля"); return;}
+        if (!regex.test(authData.email)) { setError("некоректный email"); return;}
         dispatch(authUser(authData));
+        setError("")
     }
 
     return (
         <>
-            <MyHeader><h1>Авторизация</h1></MyHeader>
+            <MyHeader>
+                <h1>Авторизация</h1>
+                {error !== "" ? <div>{error}</div> : ""}
+            </MyHeader>
             <Container fluid="xxl">
                 <Form onSubmit={submitForm}>
+
                     <Form.Group
                         className="mb-3"
                         controlId="formBasicEmail"

@@ -20,7 +20,7 @@ export default function StoresCreatePage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(store).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await createStore(store)
             setError("Успешно")

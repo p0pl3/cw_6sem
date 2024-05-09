@@ -1,61 +1,48 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {getOrderArticle, updateOrderArticle} from "../../utils/requests/orderArticle";
-import MyHeader from "../../components/MyHeader";
 import {Button, Container, Form} from "react-bootstrap";
+import {getCategories} from "../../utils/requests/category";
 
 export default function OrderArticlePage() {
     const navigate = useNavigate()
 
     const {id} = useParams()
     const {articleId} = useParams()
-
     const [error, setError] = useState("")
-
-
     const [item, setItem] = useState({
         article_number: "",
         name: "",
         author: "",
         count: ""
     })
-
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         if (id && articleId)
             try {
                 getOrderArticle(id, articleId).then(res => {
-                    const new_res = (({article_number, name, author, count, category}) =>
-                        ({article_number, name, author, count, category}))(res);
+                    const new_res = (({article_number, name, author, count, categoryId}) =>
+                        ({article_number, name, author, count, categoryId}))(res);
                     setItem(new_res)
                 })
             } catch (e) {
                 setError(e.response.data.message)
             }
+        getCategories().then(res => {
+            const new_res = res.map(item => ({
+                id: item.id,
+                name: item.name,
+            }))
+            setCategories(new_res)
+        })
     }, [articleId, id])
-
-
-    const handleChange = ({target: {value, name}}) => {
-        setItem({...item, [name]: value})
-    }
-
-    const submitForm = async (e) => {
-        e.preventDefault();
-        const isEmpty = Object.values(item).some((val) => !val);
-        if (isEmpty) return;
-        try {
-            await updateOrderArticle(id, articleId, item)
-            setError("Успешно")
-        } catch (e) {
-            setError(e.response.data.message)
-        }
-    }
 
 
     return (
         <>
             <Container fluid="xxl">
-                <Form onSubmit={submitForm}>
+                <Form>
                     <Form.Group
                         className="mb-3"
                         controlId="formArticle"
@@ -66,7 +53,8 @@ export default function OrderArticlePage() {
                             placeholder="Введите артикул"
                             name="article_number"
                             value={item.article_number}
-                            onChange={handleChange}
+                            disabled
+                            readOnly
                         />
                     </Form.Group>
                     <Form.Group
@@ -79,7 +67,8 @@ export default function OrderArticlePage() {
                             placeholder="Введите наименование"
                             name="name"
                             value={item.name}
-                            onChange={handleChange}
+                            disabled
+                            readOnly
                         />
                     </Form.Group>
                     <Form.Group
@@ -92,7 +81,8 @@ export default function OrderArticlePage() {
                             placeholder="Введите автора"
                             name="author"
                             value={item.author}
-                            onChange={handleChange}
+                            disabled
+                            readOnly
                         />
                     </Form.Group>
                     <Form.Group
@@ -101,11 +91,12 @@ export default function OrderArticlePage() {
                     >
                         <Form.Label>Количество</Form.Label>
                         <Form.Control
-                            type="text"
+                            type="number"
                             placeholder="Введите количество"
                             name="count"
                             value={item.count}
-                            onChange={handleChange}
+                            disabled
+                            readOnly
                         />
                     </Form.Group>
                     {error !== "" ? <div>{error}</div> : ""}

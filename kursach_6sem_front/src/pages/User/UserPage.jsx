@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import MyHeader from "../../components/MyHeader";
 import {Button, Container, Form} from "react-bootstrap";
-import MyNavbar from "../../components/MyNavbar/MyNavbar";
 import {getUser, updateUserAdmin} from "../../utils/requests/user";
 import {useNavigate, useParams} from "react-router-dom";
 import {getRoles} from "../../utils/requests/role";
@@ -22,21 +21,21 @@ export default function UserPage() {
 
     useEffect(() => {
 
-            getRoles().then(res => {
-                const new_res = res.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                }))
-                setRoles(new_res)
-            })
-            getStores().then(res => {
-                const new_res = res.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    address: item.address
-                }))
-                setStores(new_res)
-            })
+        getRoles().then(res => {
+            const new_res = res.map(item => ({
+                id: item.id,
+                name: item.name,
+            }))
+            setRoles(new_res)
+        })
+        getStores().then(res => {
+            const new_res = res.map(item => ({
+                id: item.id,
+                name: item.name,
+                address: item.address
+            }))
+            setStores(new_res)
+        })
 
     }, [])
 
@@ -89,7 +88,7 @@ export default function UserPage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(user).some((val) => !val);
-        if (isEmpty) return
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await updateUserAdmin(id, user)
             setError("Успешно")
@@ -127,7 +126,6 @@ export default function UserPage() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-
 
                     {user && user.roleId === 4 ? "" :
 

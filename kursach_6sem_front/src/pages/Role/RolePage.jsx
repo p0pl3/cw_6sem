@@ -4,6 +4,7 @@ import {deleteRole, getRole, updateRole} from "../../utils/requests/role";
 import {Button, Container, Form, Modal} from "react-bootstrap";
 import MyHeader from "../../components/MyHeader";
 import {useNavigate, useParams} from "react-router-dom";
+
 export default function RolePage() {
 
     const navigate = useNavigate()
@@ -15,7 +16,6 @@ export default function RolePage() {
     })
 
     const [error, setError] = useState("")
-
 
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function RolePage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(role).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await updateRole(id, role)
             setError("Успешно")

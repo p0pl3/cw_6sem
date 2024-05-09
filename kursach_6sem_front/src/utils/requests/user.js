@@ -2,7 +2,7 @@ import {axiosInstance} from "./requests";
 
 export async function getUsers() {
     try {
-        return axiosInstance.get("/user").then(res=>res.data)
+        return axiosInstance.get("/user").then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -10,7 +10,7 @@ export async function getUsers() {
 
 export async function getUser(id) {
     try {
-        return await axiosInstance.get(`/user/${id}`).then(res=>res.data)
+        return await axiosInstance.get(`/user/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -18,7 +18,7 @@ export async function getUser(id) {
 
 export async function updateUserAdmin(id, data) {
     try {
-        return await  axiosInstance.put(`/user/perms/${id}`, data)
+        return await axiosInstance.put(`/user/perms/${id}`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -26,7 +26,7 @@ export async function updateUserAdmin(id, data) {
 
 export async function deleteUser(id) {
     try {
-        return await  axiosInstance.delete(`/user/${id}`)
+        return await axiosInstance.delete(`/user/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }

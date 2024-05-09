@@ -24,7 +24,10 @@ export default function StoresPage() {
     return (
         <>
             <MyHeader>
-                <Button as={Link} to={"/admin/stores/create"}>Создать склад</Button>
+                <Button
+                    as={Link}
+                    to={"/admin/stores/create"}
+                >Создать склад</Button>
             </MyHeader>
             <ItemsList
                 items={stores}

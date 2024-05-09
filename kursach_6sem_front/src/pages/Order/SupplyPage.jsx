@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Container, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {selectCurStore, selectUser} from "../../redux/slices/auth";
 
 
 import {getAllOrders, getExternalOrders, getInternalOrders} from "../../utils/requests/order";
 import ItemsList from "../../components/ItemsList";
-import loginPage from "../Auth/LoginPage";
 
 export default function SupplyPage() {
     const [orders, setOrders] = useState([])

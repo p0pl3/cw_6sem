@@ -2,8 +2,18 @@ const {Store, User} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
 class StoreController {
-    async create(req, res) {
+    async create(req, res, next) {
         const {name, address} = req.body;
+        const candidate = await Store.findOne({where: {name}})
+        const candidate2 = await Store.findOne({where: {address}})
+        if (/[!@#$%^&*(),.?":{}|<>]/g.test(name))
+            return next(ApiError.errorRequest('Название содержит недопустимые символы'))
+        if (/[!@#$%^&*(),.?":{}|<>]/g.test(address))
+            return next(ApiError.errorRequest('Адрес содержит недопустимые символы'))
+        if (candidate)
+            return next(ApiError.errorRequest('Склад уже существует(название)'))
+        if (candidate2)
+            return next(ApiError.errorRequest('Склад уже существует(адрес)'))
         const store = await Store.create({name, address});
         return res.json(store);
     }

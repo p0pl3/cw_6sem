@@ -23,7 +23,10 @@ export default function RolesPage() {
     return (
         <>
             <MyHeader>
-                <Button as={Link} to={"/admin/roles/create"}>Создать роль</Button>
+                <Button
+                    as={Link}
+                    to={"/admin/roles/create"}
+                >Создать роль</Button>
             </MyHeader>
             <ItemsList
                 items={roles}

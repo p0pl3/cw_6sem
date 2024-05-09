@@ -26,7 +26,7 @@ export default function OrderPage() {
     useEffect(() => {
         if (id) {
             getOrder(id).then(res => {
-                const new_art = res.order_articles.map(item => ({
+                const new_art = res.book_orders.map(item => ({
                     id: item.id,
                     article_number: item.article_number,
                     name: item.name,
@@ -40,7 +40,7 @@ export default function OrderPage() {
             })
 
         }
-    }, [ id])
+    }, [id])
 
     const submit_perform = async (e) => {
         if (curUser.role.name === "EXTERNAL") {
@@ -126,7 +126,7 @@ export default function OrderPage() {
                     <Modal.Title>QR код заказа</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex justify-content-center">
-                    <QRCode value={`${ip}/${window.location.pathname.slice(1,7)}/${id}`}/>
+                    <QRCode value={`${ip}/${window.location.pathname.slice(1, 7)}/${id}`}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button

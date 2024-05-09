@@ -170,7 +170,6 @@ function MyNavbar() {
                 }
             </div>
 
-
         </Container>
     )
 }

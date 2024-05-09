@@ -20,7 +20,7 @@ export default function RoleCreatePage() {
     const submitForm = async (e) => {
         e.preventDefault();
         const isEmpty = Object.values(item).some((val) => !val);
-        if (isEmpty) return;
+        if (isEmpty) { setError("Заполните все поля"); return;}
         try {
             await createRole(item)
             setError("Успешно")

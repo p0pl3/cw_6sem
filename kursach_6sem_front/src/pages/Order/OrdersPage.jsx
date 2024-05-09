@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Container, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {selectUser} from "../../redux/slices/auth";
+import {selectCurStore, selectUser} from "../../redux/slices/auth";
 import ItemsList from "../../components/ItemsList";
 import {
     getBurseExternalOrders,
@@ -9,7 +9,6 @@ import {
     getMyBurseExternalOrders,
     getMyBurseInternalOrders
 } from "../../utils/requests/order";
-import {selectCurStore} from "../../redux/slices/auth";
 import MyHeader from "../../components/MyHeader";
 import {Link} from "react-router-dom";
 

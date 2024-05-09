@@ -31,7 +31,7 @@ export async function getStoreArticle(storeId, id) {
 
 export async function updateStoreArticle(storeId, id, data) {
     try {
-        return await axiosInstance.put(`/store_article/${storeId}/article/${id}`, data)
+        return await axiosInstance.put(`/store_article/${storeId}/article/${id}`, data).then(res => res.data)
     } catch (e) {
         throw e;
     }
@@ -39,7 +39,7 @@ export async function updateStoreArticle(storeId, id, data) {
 
 export async function deleteStoreArticle(storeId, id) {
     try {
-        return await axiosInstance.delete(`/store_article/${storeId}/article/${id}`)
+        return await axiosInstance.delete(`/store_article/${storeId}/article/${id}`).then(res => res.data)
     } catch (e) {
         throw e;
     }
